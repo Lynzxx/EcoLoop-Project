@@ -1,0 +1,43 @@
+_format_version: "3.0"
+
+services:
+
+  - name: image-recognition-service
+    url: http://image-recognition:5000
+    routes:
+      - name: image-recognition-route
+        paths:
+          - /api/image-recognition
+        strip_path: true
+
+  - name: object-detection-service
+    url: http://object-detection:5000
+    routes:
+      - name: object-detection-route
+        paths:
+          - /api/object-detection
+        strip_path: true
+
+  - name: nlp-chatbot-service
+    url: http://nlp-chatbot:5000
+    routes:
+      - name: nlp-chatbot-route
+        paths:
+          - /api/chatbot
+        strip_path: true
+
+  - name: recycling-guide-service
+    url: http://recycling-guide:5000
+    routes:
+      - name: recycling-guide-route
+        paths:
+          - /api/guide
+        strip_path: true
+
+  - name: bin-map-service
+    url: http://bin-map-service:5000
+    routes:
+      - name: bin-map-route
+        paths:
+          - /api/bin-map
+        strip_path: true

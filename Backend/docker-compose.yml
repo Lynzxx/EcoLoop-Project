@@ -1,0 +1,66 @@
+version: "3.8"
+
+services:
+
+  image-recognition:
+    build: ./image-recognition
+    container_name: image-recognition
+    expose:
+      - "5000"
+    networks:
+      - recycling-net
+
+  object-detection:
+    build: ./object-detection
+    container_name: object-detection
+    expose:
+      - "5000"
+    networks:
+      - recycling-net
+
+  nlp-chatbot:
+    build: ./nlp-chatbot
+    container_name: nlp-chatbot
+    expose:
+      - "5000"
+    networks:
+      - recycling-net
+
+  recycling-guide:
+    build: ./recycling-guide
+    container_name: recycling-guide
+    expose:
+      - "5000"
+    networks:
+      - recycling-net
+
+  bin-map-service:
+    build: ./bin-map-service
+    container_name: bin-map-service
+    expose:
+      - "5000"
+    networks:
+      - recycling-net
+
+  kong:
+    build:
+      context: ./kong
+      dockerfile: Dockerfile
+    container_name: kong-gateway
+    ports:
+      - "8000:8000"   # Proxy
+      - "8001:8001"   # Admin API
+      - "8002:8002"   # Admin GUI (Kong Manager OSS)
+    networks:
+      - recycling-net
+    depends_on:
+      - image-recognition
+      - object-detection
+      - nlp-chatbot
+      - recycling-guide
+      - bin-map-service
+    restart: unless-stopped
+
+networks:
+  recycling-net:
+    driver: bridge
